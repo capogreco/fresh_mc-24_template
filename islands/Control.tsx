@@ -27,8 +27,6 @@ const submit = async (e: SubmitEvent) => {
       },
       body: json
    })
-
-   console.log (res, json)
 }
 
 export default function Control () {
