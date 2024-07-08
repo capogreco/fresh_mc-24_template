@@ -4,6 +4,7 @@ export function SynthSplash (){
          font: italic bolder 80px sans-serif;
          justify-content: center;
          align-items: center;
+         user-select: none;
          background: black;
          position: fixed;
          display: flex;
@@ -12,7 +13,7 @@ export function SynthSplash (){
          color: white;
          left: 0;
          top: 0;"
-      > → ENABLE </div>
+      >ENABLE</div>
    );
  }
  

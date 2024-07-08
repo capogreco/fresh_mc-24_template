@@ -43,7 +43,7 @@ const update_graph = () => {
 
 }
 
-export default function Synth (props: { 
+export default function Synth (props: {
    enabled: boolean,
    program: Program
 }) {
@@ -68,6 +68,8 @@ export default function Synth (props: {
    const enable = async () => {
       if (!a.ctx) return
       await a.ctx.resume ()
+      const wake_lock = await navigator.wakeLock.request (`screen`)
+      wake_lock.onrelease = () => location.reload ()
 
       a.osc = a.ctx.createOscillator ()
       a.osc.frequency.value = 40000
