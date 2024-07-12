@@ -60,14 +60,17 @@ export default function Synth (props: {
          if (program.versionstamp === `init` 
             || data.versionstamp > program.versionstamp) {
             Object.assign (program, data)
+            console.log (program)
             update_graph ()
          }
       }
    }, [])
 
    const enable = async () => {
+
       if (!a.ctx) return
       await a.ctx.resume ()
+
       const wake_lock = await navigator.wakeLock.request (`screen`)
       wake_lock.onrelease = () => location.reload ()
 
@@ -81,7 +84,7 @@ export default function Synth (props: {
       
       enabled.value = true
       console.log (`Audio Context is`, a.ctx.state)
-
+ 
       if (program.is_playing) update_graph ()
    }
 

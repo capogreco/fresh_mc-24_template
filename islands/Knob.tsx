@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "preact/hooks"
-import { Signal, useSignal } from "@preact/signals"
+// import { Signal, useSignal } from "@preact/signals"
 
 const tau: number = Math.PI * 2
 
@@ -14,7 +14,6 @@ export default function Knob (props: {
 }) {
 
    const cnv = useRef <HTMLCanvasElement> (null)
-   // const v = useSignal (props.value)
    const v = props.value
 
    useEffect (() => {

@@ -11,7 +11,6 @@ export const handler: Handlers = {
       const bc = new BroadcastChannel (`program_channel`)
       await bc.postMessage ({ program, versionstamp })
       bc.close ()
-      // setTimeout (() => bc.close (), 5)
 
       return Response.json (versionstamp)
    }
