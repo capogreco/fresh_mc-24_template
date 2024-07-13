@@ -2,6 +2,7 @@
 import { useEffect } from "preact/hooks"
 import { Signal, signal } from "@preact/signals"
 import Knob from "./Knob.tsx"
+import IsPlayingIndicator from "./IsPlayingIndicator.tsx"
 
 const v: Signal <number> [] = []
 
@@ -9,7 +10,7 @@ for (let i = 0; i < 24; i++) {
    v.push (signal<number> (0))
 }
 
-let is_playing: boolean = false
+const is_playing = signal (false)
 
 const update = () => {
    const payload = {
@@ -25,6 +26,11 @@ const update = () => {
       },
       body: json
    })
+}
+
+const toggle_is_playing = () => {
+   is_playing.value = !is_playing.value
+   // console.log (`is_playing: ${ is_playing }`)
 }
 
 export default function Control () {
@@ -49,14 +55,20 @@ export default function Control () {
 
    useEffect (() => {
       globalThis.onkeydown = e => {
-         // console.log (e.key)
 
-         if (e.key !== `Enter` && e.key !== `p`) return
-
-         const key_handler = {
+         const key_handler: { [ key: string ]: () => void } = {
             Enter: () => update (),
-            p: () => console.log (`p`) 
+            p: () => toggle_is_playing (),
          }
+
+         let safe = false
+         for (const key in key_handler) {
+            if (e.key === key) {
+               safe = true
+               break
+            }
+         }
+         if (!safe) return
 
          key_handler[e.key] ()
       }
@@ -86,14 +98,21 @@ export default function Control () {
    }, [])
 
 
-   return <div style="
-      background: darkmagenta;
-      position: absolute;
-      user-select: none;
-      height: 100vh;
-      width: 100vw;
-      color: white;
-      left: 0;
-      top: 0;
-   ">{ matrix }</div>
+   return <>
+      <IsPlayingIndicator 
+         size={ 60 }
+         position={{ x: globalThis.innerWidth - 80, y: 20 }}
+         is_playing={ is_playing.value }
+      />
+      <div style="
+         background: darkmagenta;
+         position: absolute;
+         user-select: none;
+         height: 100vh;
+         width: 100vw;
+         color: white;
+         left: 0;
+         top: 0;
+      ">{ matrix }</div>
+   </>
 }

@@ -14,5 +14,5 @@ export function SynthScreen (){
          top: 0;"
       ></div>
    );
- }
+}
  

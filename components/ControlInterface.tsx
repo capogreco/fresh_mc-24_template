@@ -1,5 +1,5 @@
-import { resetPropWarnings } from "preact/debug";
-import Control from "../islands/Control.tsx"
+// import { resetPropWarnings } from "preact/debug";
+// import Control from "../islands/Control.tsx"
 
 export default function ControlInterface (props: { submit: (e: SubmitEvent) => void }){
    return (<div style="
