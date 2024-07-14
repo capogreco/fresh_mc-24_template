@@ -3,6 +3,7 @@ import { useEffect } from "preact/hooks"
 import { Signal, signal } from "@preact/signals"
 import Knob from "./Knob.tsx"
 import IsPlayingIndicator from "./IsPlayingIndicator.tsx"
+import { UpdateMessage } from "../components/UpdateMessage.tsx"
 
 const v: Signal <number> [] = []
 
@@ -11,13 +12,14 @@ for (let i = 0; i < 24; i++) {
 }
 
 const is_playing = signal (false)
+const is_updating = signal (false)
 
 const update = () => {
    const payload = {
       is_playing: false,
       values: v.map (v => v.value)
    }
-      const json = JSON.stringify (payload)
+   const json = JSON.stringify (payload)
    console.log (`updating: ${ json }`)
    fetch (`/api/update`, {
       method: `POST`,
@@ -26,11 +28,22 @@ const update = () => {
       },
       body: json
    })
+
+   document.createElement (`div`).innerText = `updated`
+   document.body.appendChild (document.createElement (`div`))
+
+   toggle_is_updating ()
+   setTimeout (() => toggle_is_updating (), 1000)
+
+}
+
+const toggle_is_updating = () => {
+   is_updating.value = !is_updating.value
 }
 
 const toggle_is_playing = () => {
    is_playing.value = !is_playing.value
-   // console.log (`is_playing: ${ is_playing }`)
+   update ()
 }
 
 export default function Control () {
@@ -114,5 +127,6 @@ export default function Control () {
          left: 0;
          top: 0;
       ">{ matrix }</div>
+      <UpdateMessage is_visible={ is_updating.value } />
    </>
 }

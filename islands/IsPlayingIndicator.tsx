@@ -25,8 +25,6 @@ export default function IsPlayingIndicator (props: {
       cnv.current.style.top  = `${ props.position.y }px`
       cnv.current.style.zIndex = `1`
 
-      console.dir (cnv.current)
-
       const ctx = cnv.current.getContext (`2d`)
       if (!ctx) return
 
@@ -41,12 +39,10 @@ export default function IsPlayingIndicator (props: {
          ctx.lineTo (size, size * 0.5)
          ctx.closePath ()
          ctx.fill ()
-         console.log (`playing`)
       }
       else {
          ctx.fillStyle = `white`
          ctx.fillRect (0,0, size, size)
-         console.log (`not playing`)
       }
 
    }, [ is_playing ])
