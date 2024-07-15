@@ -4,8 +4,6 @@ import { SynthSplash } from "../components/SynthSplash.tsx"
 import { SynthScreen } from "../components/SynthScreen.tsx"
 import { Program } from "../shared/types.ts"
 
-let ctx: AudioContext
-
 const a = {
    ctx: undefined as AudioContext | undefined,
    osc: undefined as OscillatorNode | undefined,
